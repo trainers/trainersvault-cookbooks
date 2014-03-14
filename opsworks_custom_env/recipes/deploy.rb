@@ -17,10 +17,10 @@ node[:deploy].each do |application, deploy|
     recursive true
   end
 
-  env_template do
+  custom_env_template do
     application application
     deploy deploy
-    env node[:env][application]
+    env node[:custom_env][application]
   end
 
 end

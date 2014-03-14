@@ -5,8 +5,8 @@
 # 
 # Notifies a "restart Rails app <name>" resource.
 
-define :env_template do
-  Chef::Log.debug("Creating env template definition with: #{params.inspect}")
+define :custom_env_template do
+  Chef::Log.debug("Creating custom_env template definition with: #{params.inspect}")
 
   application = params[:application]
   deploy = params[:deploy]
