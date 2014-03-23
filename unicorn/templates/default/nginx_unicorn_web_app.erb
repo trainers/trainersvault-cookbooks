@@ -66,3 +66,11 @@ server {
     return 503;
   }
 }
+
+<% (node[:virtual_hosts] || []).each do |virtual_host| %>
+  server {
+  listen 80;
+  server_name <%= virtual_host[:aliases]%>;
+  rewrite .* <%= virtual_host[:hostname] %>$request_uri permanent;
+  }
+<% end %>
