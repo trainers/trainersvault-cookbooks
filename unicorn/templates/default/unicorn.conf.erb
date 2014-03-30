@@ -63,18 +63,17 @@ after_fork do |server, worker|
   # Reset the memcache-based session store
   #ActionController::Base.session_options[:cache].reset if ActionController::Base.session_options[:cache].respond_to?(:reset)
 
+  if defined?(Dotenv)
+    Dotenv.overload ".env.#{Rails.env}", '.env'
+  end
 
   if defined?(Redis)
     Redis.current.quit
     Redis.current = Redis.new(url: ENV['REDIS_URL'])
   end
 
-  if defined?(Dotenv)
-    Dotenv.overload ".env.#{Rails.env}", '.env'
-  end
-
   if defined?(AnalyticsRuby)
-    AnalyticsRuby.init(secret: ENV['SEGMENT_IO_SECRET'], on_error: Proc.new{ |status, msg| print msg })
+    AnalyticsRuby.init(secret: ENV['SEGMENT_IO_KEY'], on_error: Proc.new{ |status, msg| print msg })
   end
 end
 
