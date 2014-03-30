@@ -68,6 +68,14 @@ after_fork do |server, worker|
     Redis.current.quit
     Redis.current = Redis.new(url: ENV['REDIS_URL'])
   end
+
+  if defined?(Dotenv)
+    Dotenv.overload ".env.#{Rails.env}", '.env'
+  end
+
+  if defined?(AnalyticsRuby)
+    AnalyticsRuby.init(secret: ENV['SEGMENT_IO_SECRET'], on_error: Proc.new{ |status, msg| print msg })
+  end
 end
 
 #ENV.each{ |k, v| puts "#{k}:tt#{v}" }
