@@ -1,0 +1,5 @@
+# Sysctl file for <%= @name %>
+
+<% @instructions.sort.map do |variable, value| -%>
+<%= variable %> = <%= value %>
+<% end %>
